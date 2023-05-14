@@ -11,6 +11,7 @@ def create_rand_gradient():
     for i in range(TOTAL_GRID_POINT_NUM):
         GRID_POINT_GRADIENT[i] = 2 * math.pi * random()
 
+
 create_rand_gradient()
 print(GRID_POINT_GRADIENT)
 
