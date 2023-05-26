@@ -1,56 +1,167 @@
-const totalCellNum = 200;
-const totalGridPointNum = 25;
+const PN_gridNum = 10;
+const PN_gridLength = 20;
+const PN_cellLength = 5;
+const PN_randVectorLength = Math.sqrt(2);
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = totalCellNum * 2;
-canvas.height = totalCellNum * 2;
-ctx.fillStyle = "#ffffff";
-ctx.fillRect(0, 0, totalCellNum, totalCellNum);
-ctx.strokeStyle = "#000000";
-for (let i = 0; i < 5; i++) {
-  ctx.beginPath();
-  ctx.moveTo(i * 50 + 100, 100);
-  ctx.lineTo(i * 50 + 100, totalCellNum + 100);
-  ctx.stroke();
-}
-for (let i = 0; i < 5; i++) {
-  ctx.beginPath();
-  ctx.moveTo(100, i * 50 + 100);
-  ctx.lineTo(totalCellNum + 100, i * 50 + 100);
-  ctx.stroke();
-}
+let PN_FinalResult = [];
+let PN_GridPoint = [];
 
-let finalResult = [];
-let gridPointGradient = [];
-
-function createRandomGradient() {
-  for (let i = 0; i < totalGridPointNum; i++) {
-    gridPointGradient.push(2 * Math.PI * Math.random());
+function randVec() {
+  let tempGridPoint = [];
+  for (let i = 0; i < PN_gridNum + 1; i++) {
+    for (let j = 0; j < PN_gridNum + 1; j++) {
+      tempGridPoint.push(Number((2 * Math.PI * Math.random()).toFixed(6)));
+    }
+    PN_GridPoint.push(tempGridPoint);
+    tempGridPoint = [];
   }
 }
 
-function getDestinationCoordinate(x, y, theta, length) {
-  const destX = Math.cos(theta) * length + x;
-  //Math.cos(theta) = Math.sqrt(Math.pow(destX - x, 2)) / length
-  const destY = Math.sin(theta) * length + y;
-  return [destX, destY];
+function interpolate(a, b, x) {
+  return a + (b - a) * (3 * Math.pow(x, 2) - 2 * Math.pow(x, 3));
 }
 
-createRandomGradient();
-console.log(gridPointGradient);
-
-for (let i = 0; i < 5; i++) {
-  for (let j = 0; j < 5; j++) {
-    let [x, y] = getDestinationCoordinate(
-      j * 50 + 100,
-      i * 50 + 100,
-      gridPointGradient[j + i * 5],
-      Math.sqrt(2) * 50
-    );
-    ctx.beginPath();
-    ctx.moveTo(j * 50 + 100, i * 50 + 100);
-    ctx.lineTo(x + 100, y + 100);
-    ctx.stroke();
+function setResult(x, y) {
+  let prodResult = [null, null, null, null];
+  let scaledX = [null, null, null, null];
+  let scaledY = [null, null, null, null];
+  let tempInterpolation1, tempInterpolation2;
+  let tempResult = [];
+  for (let i = 0; i < PN_gridLength; i++) {
+    for (let j = 0; j < PN_gridLength; j++) {
+      scaledX = [
+        (j + 1) / PN_gridLength,
+        -(PN_gridLength - 1 - j) / PN_gridLength,
+        (j + 1) / PN_gridLength,
+        -(PN_gridLength - 1 - j) / PN_gridLength,
+      ];
+      scaledY = [
+        -(i + 1) / PN_gridLength,
+        -(i + 1) / PN_gridLength,
+        (PN_gridLength - 1 - i) / PN_gridLength,
+        (PN_gridLength - 1 - i) / PN_gridLength,
+      ];
+      prodResult[0] =
+        PN_randVectorLength *
+        (Math.cos(PN_GridPoint[y][x]) * scaledX[0] +
+          Math.sin(PN_GridPoint[y][x]) * scaledY[0]);
+      prodResult[1] =
+        PN_randVectorLength *
+        (Math.cos(PN_GridPoint[y][x + 1]) * scaledX[1] +
+          Math.sin(PN_GridPoint[y][x + 1]) * scaledY[1]);
+      prodResult[2] =
+        PN_randVectorLength *
+        (Math.cos(PN_GridPoint[y + 1][x]) * scaledX[2] +
+          Math.sin(PN_GridPoint[y + 1][x]) * scaledY[2]);
+      prodResult[3] =
+        PN_randVectorLength *
+        (Math.cos(PN_GridPoint[y + 1][x + 1]) * scaledX[3] +
+          Math.sin(PN_GridPoint[y + 1][x + 1]) * scaledY[3]);
+      tempInterpolation1 = interpolate(
+        prodResult[0],
+        prodResult[1],
+        j / PN_gridLength
+      );
+      tempInterpolation2 = interpolate(
+        prodResult[2],
+        prodResult[3],
+        j / PN_gridLength
+      );
+      //console.log(tempInterpolation1, tempInterpolation2);
+      tempResult.push(
+        interpolate(tempInterpolation1, tempInterpolation2, i / PN_gridLength)
+      );
+    }
+    PN_FinalResult.push(tempResult);
+    tempResult = [];
   }
+}
+
+function draw() {
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  for (let n = 0; n < PN_gridNum; n++) {
+    for (let m = 0; m < PN_gridNum; m++) {
+      for (let j = 0; j < PN_gridLength; j++) {
+        for (let i = 0; i < PN_gridLength; i++) {
+          let rawValue =
+            (PN_FinalResult[
+              n * (PN_gridLength * PN_gridNum) + m * PN_gridLength + j
+            ][i] +
+              1) *
+            128; //0~256
+          let colorValue = getColorValue(rawValue);
+          ctx.fillStyle = "#" + colorValue + colorValue + colorValue;
+          ctx.fillRect(
+            m * PN_cellLength * PN_gridLength + i * PN_cellLength,
+            n * PN_cellLength * PN_gridLength + j * PN_cellLength,
+            PN_cellLength,
+            PN_cellLength
+          );
+        }
+      }
+    }
+  }
+}
+
+function makePerlinNoise() {
+  randVec();
+  for (let i = 0; i < PN_gridNum; i++) {
+    for (let j = 0; j < PN_gridNum; j++) {
+      setResult(j, i);
+    }
+  }
+  console.log(PN_FinalResult);
+}
+
+function getColorValue(x) {
+  // 0 < x < 256
+  let units = Math.round(x % 16);
+  let tens = Math.floor(x / 16);
+  let num = convertTo16(tens) + convertTo16(units); // String
+  return num;
+}
+
+function convertTo16(x) {
+  let numInString = "";
+  if (x < 10) {
+    numInString += String(x);
+  } else {
+    switch (x) {
+      case 10:
+        numInString += "a";
+        break;
+      case 11:
+        numInString += "b";
+        break;
+      case 12:
+        numInString += "c";
+        break;
+      case 13:
+        numInString += "d";
+        break;
+      case 14:
+        numInString += "e";
+        break;
+      case 15:
+        numInString += "f";
+        break;
+    }
+  }
+  return numInString;
+}
+
+function getMinMax(arr) {
+  let min, max;
+  let tempMin = [];
+  let tempMax = [];
+  for (let i = 0; i < PN_FinalResult.length; i++) {
+    tempMin.push(Math.min(...arr[i]));
+    tempMax.push(Math.max(...arr[i]));
+  }
+  min = Math.min(...tempMin);
+  max = Math.max(...tempMax);
+  console.log(min, max);
+  return [min, max];
 }
