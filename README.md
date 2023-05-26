@@ -1,3 +1,3 @@
 # PerlinNoise
 
-<img src="./PerlinNoise/blacknwhite.png" title="Perlin noise in black & white"/>
+<img src="./output/blacknwhite.png" title="Perlin noise in black & white"/>
