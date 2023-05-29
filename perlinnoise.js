@@ -6,6 +6,14 @@ const PN_randVectorLength = Math.sqrt(2);
 let PN_FinalResult = [];
 let PN_GridPoint = [];
 
+const toggle = document.getElementById("toggle");
+const span = document.getElementById("span");
+
+toggle.addEventListener("click", (e) => {
+  console.log(e.target.checked);
+  span.innerText = e.target.checked ? "Minecraft" : "Black  & White";
+});
+
 function randVec() {
   let tempGridPoint = [];
   for (let i = 0; i < PN_gridNum + 1; i++) {

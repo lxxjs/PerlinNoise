@@ -8,14 +8,16 @@
     <title>Perlin Noise</title>
   </head>
   <body>
-    <h1>Perlin Noise Generator</h1>
     <div class="div">
+      <h1>Perlin Noise Generator</h1>
       <label class="switch">
-        <input type="checkbox" />
-        <span class="slider round"></span>
+        <input id="toggle" type="checkbox" />
+        <span id="span" class="slider round"></span>
       </label>
     </div>
-    <canvas id="canvas" width="1000px" height="1000px"></canvas>
+    <div class="div canvas">
+      <canvas id="canvas" width="1000px" height="1000px"></canvas>
+    </div>
     <script src="./perlinnoise.js"></script>
   </body>
 </html>

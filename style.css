@@ -2,11 +2,19 @@ body {
   background-color: #ffa351;
 }
 
-h1 {
+* {
   color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-family: sans-serif;
-  font-size: 50px;
   font-weight: 900;
+}
+h1 {
+  vertical-align: auto;
+  font-size: 50px;
+  display: inline-block;
+  height: 75px;
+  margin: 0px;
+  padding: 15px;
 }
 
 #canvas {
@@ -15,7 +23,11 @@ h1 {
 }
 
 .div {
-  margin: 10px;
+  width: 1000px;
+}
+
+.div.canvas {
+  height: 1000px;
 }
 
 /* The switch - the box around the slider */
@@ -24,6 +36,8 @@ h1 {
   display: inline-block;
   width: 100px;
   height: 34px;
+  bottom: 15px;
+  left: 10px;
 }
 
 /* Hide default HTML checkbox */
