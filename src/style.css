@@ -8,6 +8,7 @@ body {
   font-family: sans-serif;
   font-weight: 900;
 }
+
 h1 {
   vertical-align: auto;
   font-size: 50px;
@@ -17,16 +18,43 @@ h1 {
   padding: 15px;
 }
 
+#typeText {
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+  bottom: 15px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#button {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 20px;
+  position: relative;
+  bottom: 5px;
+}
+
 #canvas {
   /*border: 10px ridge #eed971;*/
   background-color: #ffbe7b;
+  border-radius: 15px;
 }
 
 .div {
-  width: 1000px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.div:nth-child(2) {
+  width: 120px;
 }
 
 .div.canvas {
+  display: block;
+  width: 1000px;
   height: 1000px;
 }
 
@@ -36,8 +64,7 @@ h1 {
   display: inline-block;
   width: 100px;
   height: 34px;
-  bottom: 15px;
-  left: 10px;
+  bottom: 10px;
 }
 
 /* Hide default HTML checkbox */
