@@ -18,26 +18,6 @@ h1 {
   padding: 15px;
 }
 
-#typeText {
-  position: relative;
-  display: inline-block;
-  font-size: 15px;
-  bottom: 15px;
-  margin: 0px;
-  padding: 0px;
-}
-
-#button {
-  width: 100px;
-  height: 40px;
-  border-radius: 5px;
-}
-
-#canvas {
-  background-color: lightgray;
-  border-radius: 15px;
-}
-
 .div {
   width: 1000px;
   position: relative;
@@ -55,10 +35,30 @@ h1 {
   padding: 3% 0;
 }
 
+#typeText {
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+  bottom: 15px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#button {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+}
+
 .div.canvas {
   display: block;
   width: 1000px;
   height: 1000px;
+}
+
+#canvas {
+  background-color: lightgray;
+  border-radius: 15px;
 }
 
 /* The switch - the box around the slider */
