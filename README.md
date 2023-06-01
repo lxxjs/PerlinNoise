@@ -1,6 +1,7 @@
 # PerlinNoise
 
-Perlin-noise simulator
+Just a perlin-noise simulator
+You can try either black & white / minecraft mode
 
 
 | Black & White | Minecraft Map|
