@@ -1,12 +1,11 @@
 body {
-  background-color: #ffa351;
+  background-color: white;
   font: 14px/1.5 "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * {
-  color: white;
-/*   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  font-family: sans-serif; */
+  color: lightgray;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-weight: 900;
 }
 
@@ -31,30 +30,32 @@ h1 {
 #button {
   width: 100px;
   height: 40px;
-  border-radius: 10px;
-  margin: 20px;
-  position: relative;
-  bottom: 5px;
+  border-radius: 5px;
 }
 
 #canvas {
-  /*border: 10px ridge #eed971;*/
-  background-color: #ffbe7b;
+  background-color: lightgray;
   border-radius: 15px;
 }
 
 .div {
+  width: 1000px;
   position: relative;
   display: inline-block;
   text-align: center;
 }
 
-.div:nth-child(2) {
+.div.header div:nth-child(2) {
   width: 120px;
+  display: inline-block;
+}
+
+.div.header div:nth-child(3) {
+  display: inline-block;
+  padding: 3% 0;
 }
 
 .div.canvas {
-  display: block;
   width: 1000px;
   height: 1000px;
 }
@@ -63,9 +64,9 @@ h1 {
 .switch {
   position: relative;
   display: inline-block;
+  margin: 0px;
   width: 100px;
   height: 34px;
-  bottom: 10px;
 }
 
 /* Hide default HTML checkbox */
@@ -77,6 +78,8 @@ h1 {
 
 /* The slider */
 .slider {
+  margin-top: auto;
+  margin-bottom: auto;
   position: absolute;
   cursor: pointer;
   top: 0;
