@@ -2,7 +2,7 @@
 
 : Just a perlin-noise simulator     
      
-You can try either black & white / minecraft mode @ https://lxxjs.github.io/PerlinNoise/
+Try generate yours (black & white / minecraft) @ https://lxxjs.github.io/PerlinNoise/
 
 
 | Black & White | Minecraft Map|
